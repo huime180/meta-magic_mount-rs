@@ -1,7 +1,5 @@
 #!/system/bin/sh
 
-ui_print "- Using mmrs metainstall"
-
 if [ -z "$APATCH" ] && [ -z "$KSU" ]; then
   abort "! unsupported root platform"
 fi
@@ -63,9 +61,6 @@ if [ ! -f "/data/adb/magic_mount/config.toml" ]; then
 fi
 
 rm -f "$MODPATH/config_apatch.toml"
-ui_print "- Remove useless files"
 
 ui_print "- Installation complete"
-ui_print "- Image is ready for module installations"
-
 ui_print "- Welcome to mmrs!"
