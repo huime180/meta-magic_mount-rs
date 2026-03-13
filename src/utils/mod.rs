@@ -5,8 +5,10 @@
 pub mod ksucalls;
 
 use std::{
-    fs::create_dir_all,
+    fs::{self, create_dir_all},
+    io::{BufRead, BufReader, Write},
     path::{Path, PathBuf},
+    process::Command,
 };
 
 use anyhow::{Context, Result, anyhow, bail};
@@ -14,6 +16,7 @@ use anyhow::{Context, Result, anyhow, bail};
 use extattr::{Flags as XattrFlags, lgetxattr, lsetxattr};
 use regex_lite::Regex;
 
+use crate::defs;
 #[cfg(any(target_os = "linux", target_os = "android"))]
 use crate::defs::SELINUX_XATTR;
 
@@ -86,5 +89,48 @@ where
         Ok(())
     } else {
         bail!("{} is not a regular directory", dir.as_ref().display())
+    }
+}
+
+pub fn update_desc(files: u32, symbols: u32) {
+    let text = format!("😋 mounted files: {files}, mounted symbols: {symbols}",);
+
+    if ksucalls::KSU.load(std::sync::atomic::Ordering::Relaxed) {
+        let result = Command::new("ksud")
+            .arg("module")
+            .arg("config")
+            .arg("set")
+            .arg("override.description")
+            .arg(&text)
+            .output();
+
+        if let Ok(ret) = result
+            && ret.status.success()
+        {
+            return;
+        }
+    }
+
+    if let Ok(mut f) = fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .open(defs::MODULE_PROP)
+    {
+        let buf = BufReader::new(&f);
+        let new: Vec<String> = buf
+            .lines()
+            .flatten()
+            .map(|l| {
+                if l.starts_with("description") {
+                    format!("description={text}")
+                } else {
+                    l
+                }
+            })
+            .collect();
+
+        f.write_all(new.join("\n").as_bytes())
+            .map_err(|e| log::error!("Failed to update description: {e}"))
+            .unwrap();
     }
 }
