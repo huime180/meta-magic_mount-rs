@@ -325,7 +325,7 @@ where
         mount(mount_source, &tmp_dir, "tmpfs", MountFlags::empty(), None).context("mount tmp")?;
         mount_change(&tmp_dir, MountPropagationFlags::PRIVATE).context("make tmp private")?;
 
-        let ret = MagicMount::new(
+        let _ret = MagicMount::new(
             &root,
             Path::new("/"),
             tmp_dir.as_path(),
