@@ -52,28 +52,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn cal_version_code(version: &str) -> Result<usize> {
-    let manjor = version
-        .split('.')
-        .next()
-        .ok_or_else(|| anyhow::anyhow!("Invalid version format"))?;
-    let manjor: usize = manjor.parse()?;
-    let minor = version
-        .split('.')
-        .nth(1)
-        .ok_or_else(|| anyhow::anyhow!("Invalid version format"))?;
-    let minor: usize = minor.parse()?;
-    let patch = version
-        .split('.')
-        .nth(2)
-        .ok_or_else(|| anyhow::anyhow!("Invalid version format"))?;
-    let patch: usize = patch.parse()?;
-
-    // Version code rule: Major * 100000 + Minor * 1000 + Patch
-    Ok(manjor * 100000 + minor * 1000 + patch)
-}
-
-fn cal_git_code() -> Result<i32> {
+fn cal_git_code() -> Result<usize> {
     Ok(String::from_utf8(
         Command::new("git")
             .args(["rev-list", "--count", "HEAD"])
@@ -81,7 +60,7 @@ fn cal_git_code() -> Result<i32> {
             .stdout,
     )?
     .trim()
-    .parse::<i32>()?)
+    .parse::<usize>()?)
 }
 
 fn update() -> Result<()> {
@@ -91,7 +70,7 @@ fn update() -> Result<()> {
     //build()?;
 
     let json = UpdateJson {
-        versioncode: cal_version_code(&data.package.version)?,
+        versioncode: cal_git_code()?,
         // Fixed typo here as well
         version: data.package.version.clone(),
         zipurl: format!(
