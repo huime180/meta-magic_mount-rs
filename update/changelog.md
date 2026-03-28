@@ -1,52 +1,39 @@
-## 2.3.1 - 2026-03-27
+## 3.0.0 - 2026-03-28
 
-**[View changes](https://github.com/Tools-cx-app/meta-magic_mount-rs/compare/3a38ab83dd69fb842276b1e819ff73dc64e80735...68e01549a06b19bf9f82ed01b2f3503884bd5ce9)**(3a38ab8...68e0154)
-
-### <!-- 11 --> Other
-
-- Fix error handler([2266df9](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/2266df99039e0c4b666a4f37b632305ce52a5ff0))
-
-## 2.3.0 - 2026-03-27
-
-**[View changes](https://github.com/Tools-cx-app/meta-magic_mount-rs/compare/1d3cc40380d75fd69905969313212149dee0c104...3a38ab83dd69fb842276b1e819ff73dc64e80735)**(1d3cc40...3a38ab8)
+**[View changes](https://github.com/Tools-cx-app/meta-magic_mount-rs/compare/68e01549a06b19bf9f82ed01b2f3503884bd5ce9...63832f16e60979434cf4b64a922f459840932d46)**(68e0154...63832f1)
 
 ### <!-- 0 --> Features
 
-- Switch to the new versionCode counting method([80688af](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/80688afd86bd1e114c1b328a9a41f63f75c0a77f))
-- Dont use `{:?}`([262d546](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/262d54695252058919bbcec2ddb7f4362e0817cc))
-- Add late load check([9b6cb6d](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/9b6cb6d2ee9739b97a4db26b30f19a28a55b0912))
+- Support ignore.list([ef96df8](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/ef96df8f4204cf6ce87efb8d084a756fe66ea5e4))
+- Implement ignore.list management in Modules tab([cb46fcd](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/cb46fcdcbe6177c2051fa6b917f3bc30cdeb476e))
+- Add multi-language support for ignore.list management([e034e61](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/e034e61aea1eebb25fc4de5a2776eec77d902971))
+- Implement ignore.list management in Config tab([c80f116](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/c80f11648d49ea705e4769b19e131450a4268f88))
+- Refine config bottom actions to sticky non-lifting layout (#37)([7651309](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/765130984ae5cd31660de30ba0e94bfe1aeb4084))
+- Sync MD3 components and styles from upstream([b0a1b57](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/b0a1b577f7a77bc38d25ec48ae94cd2a20102190))
 
 ### <!-- 1 --> Bug Fixes
 
-- Clean up tempdir after execution (#32)([d74c456](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/d74c456fd2d3568f3e4e855ab15bd81539ef98bb))
-
-### <!-- 10 --> Reverts
-
-- Revert "fix: fix the tempdir will be appeared in `/proc/self/mounts`"([1c64cfb](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/1c64cfba5b02482f2e7e3bea2981701d1257b5f0))
+- Prevent page lift and input obscuring on mobile([7c41c57](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/7c41c57abce7be97ebb19b8547d499996d392fa7))
+- Improve mobile config input behavior([df5a920](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/df5a920893e08426386886fcec39c22f65837a8c))
+- Resolve typescript and eslint errors in md3 components([7c11d67](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/7c11d67f92abe07d59a65e91005e3c4bdc0b6d4d))
+- Try fix typelint([663f96c](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/663f96c85aad7cca3afc4498a7f54b948be2430f))
 
 ### <!-- 11 --> Adjust
 
-- Adj versionCode([e8c838f](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/e8c838f011cd468b1af2e6e20082cb95a2c928d8))
-- Adj node debug print([13b0ca3](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/13b0ca3d5d7623662e94ae535b0ee904cecd7945))
-- Adj prop parse to use `java-properties`([9c4d8a1](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/9c4d8a1fd14e4027581d8b2d87555bd8e2f353f4))
-- Adj node print([6166ab5](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/6166ab523e468fb38c34c54f42635fcf1b1227b2))
+- Adj magic mount return hanlder([b16abe3](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/b16abe3505de127f7d2c58dc73813fbfefb11151))
 
 ### <!-- 11 --> Other
 
-- Fix regex error([c40c470](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/c40c470a33dda5ed65a36e5712532260ebe6c043))
-- Add support for hot install(https://github.com/backslashxx/mountify/commit/5bdfb8fff9c53667dda63cd955453a451eca2725)([765a62f](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/765a62fba1e94ec69a48fbc0897128aa406d677a))
+- Fix error url([f561448](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/f561448310a8e9a88714a58660671dda38e9d6e8))
 
-### <!-- 3 --> Refactor
+### <!-- 6 --> Styling
 
-- Add line breaks to module descriptions([1069006](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/1069006d1bd1d392f3d0600f03b8950dc11ef8ee))
-- Refactor node print([29cc67f](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/29cc67f2a7caca415f60eea80ab6932369c571f2))
-
-### <!-- 4 --> Documentation
-
-- Add star history([296d952](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/296d952751416eaeb7cfb92e359ce445422b16e2))
+- Fix linting errors across components and libs([439b44f](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/439b44ffa17ea8db4eb5a4decaafb9e02f3deff4))
+- Remove strange background of bottom-actions([60fae84](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/60fae84847c93cd70c0c6976a81f04cd8439186e))
 
 ### <!-- 8 --> Miscellaneous Tasks
 
-- Delete duplicate cleanup([ffc1272](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/ffc12723ef1dac1cf9d1c5e4004332c1c12fab93))
+- Add typescript declarations for material web components([a5fb494](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/a5fb494e35ed3446799ab8dca6d22e4826409f78))
+- Fmt([0e4d128](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/0e4d1285aec1f9ed72b37d4b83232bb62ec1c90a))
 
 
