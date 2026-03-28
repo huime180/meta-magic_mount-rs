@@ -63,7 +63,7 @@ export default (props: ChipInputProps) => {
         <For each={props.values}>
           {(val, i) => (
             <md-input-chip
-              prop:label={val}
+              label={val}
               remove-only
               on:remove={() => removeChip(i())}
             />
