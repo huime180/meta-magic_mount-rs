@@ -7,7 +7,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "types": ["./src/global.d.ts", "vite/client"],
+    "types": ["vite/client"],
     "allowImportingTsExtensions": true,
     "strict": true,
     "noEmit": true,

@@ -117,7 +117,6 @@ html,
 body,
 #app {
   height: 100%;
-  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -130,13 +129,6 @@ body,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
-}
-
-@supports (height: 100lvh) {
-  #app {
-    height: 100lvh;
-    min-height: 100lvh;
-  }
 }
 
 input,
@@ -267,6 +259,73 @@ button:active {
 .text-field input:focus ~ label,
 .text-field select:focus ~ label {
   color: var(--md-sys-color-primary);
+}
+
+.bottom-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px calc(16px + var(--safe-area-inset-bottom, 0px)) 24px;
+  background: linear-gradient(
+    to top,
+    var(--md-sys-color-surface) 85%,
+    transparent
+  );
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.bottom-actions > * {
+  pointer-events: auto;
+}
+
+
+.bottom-actions-root {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--bottom-nav-height, 88px) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+  transform: translate3d(
+    0,
+    calc(-1 * var(--bottom-actions-keyboard-inset, 0px)),
+    0
+  );
+  transition:
+    opacity 0.2s ease,
+    transform 0.24s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.bottom-actions-root.is-active {
+  opacity: 1;
+}
+
+.bottom-actions-root > * {
+  pointer-events: auto;
+}
+
+.bottom-actions-root > .spacer {
+  flex: 1;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-actions-root {
+    transition: opacity 0.01s linear;
+  }
 }
 
 code,

@@ -1,4 +1,5 @@
-import { ParentProps, createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { ParentProps } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { Portal } from "solid-js/web";
 
 export default function BottomActions(props: ParentProps) {
@@ -19,7 +20,7 @@ export default function BottomActions(props: ParentProps) {
       {
         root: rootEl,
         threshold: [0.6],
-      }
+      },
     );
 
     observer.observe(pageEl);
@@ -37,7 +38,7 @@ export default function BottomActions(props: ParentProps) {
         rafId = 0;
         const inset = Math.max(
           0,
-          Math.round(window.innerHeight - viewport.height - viewport.offsetTop)
+          Math.round(window.innerHeight - viewport.height - viewport.offsetTop),
         );
         setKeyboardInset((prev) => (Math.abs(prev - inset) < 2 ? prev : inset));
       });
@@ -61,7 +62,7 @@ export default function BottomActions(props: ParentProps) {
 
     rootRef.style.setProperty(
       "--bottom-actions-keyboard-inset",
-      `${keyboardInset()}px`
+      `${keyboardInset()}px`,
     );
     rootRef.toggleAttribute("inert", !isActivePage());
   });

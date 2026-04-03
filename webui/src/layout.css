@@ -1,24 +1,11 @@
-/**
- * Copyright 2025 Meta-Hybrid Mount Authors
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
-
 .app-root {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   background-color: var(--md-sys-color-background);
-}
-
-@supports (height: 100lvh) {
-  .app-root {
-    height: 100lvh;
-    min-height: 100lvh;
-  }
 }
 .main-content {
   flex: 1;
@@ -32,7 +19,9 @@
   width: calc(var(--tab-count, 4) * 100%);
   height: 100%;
   will-change: transform;
-  transform: translateX(calc(var(--swipe-base, 0%) + var(--swipe-offset, 0px)));
+  transform: translateX(
+    calc(var(--swipe-base, 0%) + var(--swipe-offset, 0px))
+  );
   transition: var(
     --swipe-transition,
     transform 0.4s cubic-bezier(0.2, 1, 0.2, 1)
@@ -49,9 +38,7 @@
   height: 100%;
   overflow-y: auto;
   padding: 16px;
-  padding-bottom: calc(
-    16px + var(--bottom-nav-height, 88px) + var(--safe-area-inset-bottom, 0px)
-  );
+  padding-bottom: calc(16px + var(--bottom-nav-height, 88px) + var(--safe-area-inset-bottom, 0px));
   box-sizing: border-box;
   width: 100%;
   max-width: 800px;

@@ -8,7 +8,7 @@ import "@material/web/ripple/ripple.js";
 interface Props {
   activeTab: string;
   onTabChange: (id: string) => void;
-  tabs: { id: string }[];
+    tabs: readonly { id: string }[];
 }
 
 export default function NavBar(props: Props) {
