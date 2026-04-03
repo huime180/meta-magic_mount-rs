@@ -21,7 +21,7 @@
   will-change: opacity, transform;
   transform: translate3d(
     0,
-    calc(-1 * var(--bottom-actions-keyboard-inset, 0px)),
+    calc(-1 * var(--bottom-actions-keyboard-lift, 0px)),
     0
   );
   transition:

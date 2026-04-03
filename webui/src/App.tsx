@@ -48,6 +48,7 @@ export default function App() {
 
   const baseTranslateX = createMemo(() => {
     const index = visibleTabs().indexOf(activeTab());
+
     return index * -(100 / visibleTabs().length);
   });
 
@@ -57,8 +58,10 @@ export default function App() {
       if (prev.has(currentTab)) {
         return prev;
       }
+
       const next = new Set(prev);
       next.add(currentTab);
+
       return next;
     });
   });
@@ -100,6 +103,7 @@ export default function App() {
     if (isEditingTarget(e)) {
       setIsDragging(false);
       setDragOffset(0);
+
       return;
     }
 
@@ -124,12 +128,14 @@ export default function App() {
       if (Math.abs(diffX) < 8 && Math.abs(diffY) < 8) {
         return;
       }
+
       setDragAxisLocked(Math.abs(diffX) >= Math.abs(diffY) ? "x" : "y");
     }
 
     if (dragAxisLocked() === "y") {
       setIsDragging(false);
       setDragOffset(0);
+
       return;
     }
 
@@ -153,6 +159,7 @@ export default function App() {
   function handleTouchEnd() {
     if (!isDragging()) {
       setDragAxisLocked(null);
+
       return;
     }
 

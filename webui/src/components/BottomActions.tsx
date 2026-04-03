@@ -11,9 +11,28 @@ import "./BottomActions.css";
 
 export default function BottomActions(props: ParentProps) {
   const [isActivePage, setIsActivePage] = createSignal(true);
-  const [keyboardInset, setKeyboardInset] = createSignal(0);
+  const [keyboardLift, setKeyboardLift] = createSignal(0);
   let anchorRef: HTMLDivElement | undefined;
   let rootRef: HTMLDivElement | undefined;
+
+  function parsePixels(value: string): number {
+    const parsed = Number.parseFloat(value);
+
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  function getStaticBottomOffset(): number {
+    const styles = window.getComputedStyle(document.documentElement);
+    const navHeight = parsePixels(
+      styles.getPropertyValue("--bottom-nav-height"),
+    );
+    const safeAreaBottom = parsePixels(
+      styles.getPropertyValue("--safe-area-inset-bottom") ||
+        styles.getPropertyValue("--window-inset-bottom"),
+    );
+
+    return navHeight + safeAreaBottom;
+  }
 
   onMount(() => {
     const pageEl = anchorRef?.closest(".swipe-page");
@@ -52,7 +71,7 @@ export default function BottomActions(props: ParentProps) {
 
       rafId = window.requestAnimationFrame(() => {
         rafId = 0;
-        const inset = Math.max(
+        const keyboardInset = Math.max(
           0,
           Math.round(
             window.innerHeight -
@@ -60,7 +79,14 @@ export default function BottomActions(props: ParentProps) {
               activeViewport.offsetTop,
           ),
         );
-        setKeyboardInset((prev) => (Math.abs(prev - inset) < 2 ? prev : inset));
+        const nextLift = Math.max(
+          0,
+          keyboardInset - Math.round(getStaticBottomOffset()),
+        );
+
+        setKeyboardLift((prev) =>
+          Math.abs(prev - nextLift) < 2 ? prev : nextLift,
+        );
       });
     }
 
@@ -86,8 +112,8 @@ export default function BottomActions(props: ParentProps) {
     }
 
     rootRef.style.setProperty(
-      "--bottom-actions-keyboard-inset",
-      `${keyboardInset()}px`,
+      "--bottom-actions-keyboard-lift",
+      `${keyboardLift()}px`,
     );
     rootRef.toggleAttribute("inert", !isActivePage());
   });

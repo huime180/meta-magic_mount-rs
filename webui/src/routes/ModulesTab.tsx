@@ -124,7 +124,7 @@ export default function ModulesTab() {
                               {uiStore.L.modules.descriptionLabel}
                             </div>
                             <p class="module-desc">
-                              {module.description ||
+                              {module.description ??
                                 uiStore.L.modules.noDescriptionLabel}
                             </p>
                           </div>
@@ -134,7 +134,7 @@ export default function ModulesTab() {
                               {uiStore.L.modules.authorLabel}
                             </div>
                             <div class="module-author">
-                              {module.author || uiStore.L.modules.unknownLabel}
+                              {module.author ?? uiStore.L.modules.unknownLabel}
                             </div>
                           </div>
                         </div>

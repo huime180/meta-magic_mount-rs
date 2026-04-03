@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import type { AppAPI } from "../types";
+import type { AppAPI, AppConfig } from "../types";
 import { DEFAULT_CONFIG } from "./constants";
 
 const MOCK_DELAY = 600;
@@ -24,7 +24,7 @@ export const MockAPI: AppAPI = {
     };
   },
 
-  saveConfig: async (config) => {
+  saveConfig: async (config: AppConfig) => {
     await delay(MOCK_DELAY);
     console.log("[MockAPI] saveConfig:", config);
   },
@@ -112,7 +112,7 @@ export const MockAPI: AppAPI = {
     alert("Reboot requested (Mock)");
   },
 
-  openLink: async (url) => {
+  openLink: async (url: string) => {
     console.log("[MockAPI] Open link:", url);
     window.open(url, "_blank");
   },

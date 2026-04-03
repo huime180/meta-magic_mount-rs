@@ -155,7 +155,7 @@ const RealAPI: AppAPI = {
     throw new Error(stderr || "show-config failed");
   },
 
-  saveConfig: async (config) => {
+  saveConfig: async (config: AppConfig) => {
     const payload = stringToHex(
       JSON.stringify(createStandardConfigPayload(config)),
     );
@@ -326,7 +326,7 @@ const RealAPI: AppAPI = {
     return "Unknown";
   },
 
-  openLink: async (url) => {
+  openLink: async (url: string) => {
     const safeUrl = shellEscapeDoubleQuoted(url);
     const cmd = `am start -a android.intent.action.VIEW -d "${safeUrl}"`;
 

@@ -14,7 +14,8 @@ import "@material/web/icon/icon.js";
 import "@material/web/iconbutton/filled-tonal-icon-button.js";
 import "./StatusTab.css";
 
-const STAR_PATH = "M12 2.25c.19 5.34 4.41 9.56 9.75 9.75-5.34.19-9.56 4.41-9.75 9.75-.19-5.34-4.41-9.56-9.75-9.75C7.59 11.81 11.81 7.59 12 2.25z";
+const STAR_PATH =
+  "M12 2.25c.19 5.34 4.41 9.56 9.75 9.75-5.34.19-9.56 4.41-9.75 9.75-.19-5.34-4.41-9.56-9.75-9.75C7.59 11.81 11.81 7.59 12 2.25z";
 
 export default function StatusTab() {
   const [showRebootConfirm, setShowRebootConfirm] = createSignal(false);
@@ -70,7 +71,9 @@ export default function StatusTab() {
             <div class="hero-content">
               <span class="hero-greeting">Welcome to</span>
               <span class="hero-value">Magic Mount-rs</span>
-              <Show when={sysStore.device.model && sysStore.device.model !== "-"}>
+              <Show
+                when={sysStore.device.model && sysStore.device.model !== "-"}
+              >
                 <span class="hero-subtitle">{sysStore.device.model}</span>
               </Show>
             </div>
@@ -118,7 +121,7 @@ export default function StatusTab() {
               when={!sysStore.loading}
               fallback={<Skeleton class="skeleton-info-wide" />}
             >
-              <span class="info-val">{sysStore.systemInfo.kernel || "-"}</span>
+              <span class="info-val">{sysStore.systemInfo.kernel ?? "-"}</span>
             </Show>
           </div>
 
@@ -128,7 +131,7 @@ export default function StatusTab() {
               when={!sysStore.loading}
               fallback={<Skeleton class="skeleton-info-narrow" />}
             >
-              <span class="info-val">{sysStore.systemInfo.selinux || "-"}</span>
+              <span class="info-val">{sysStore.systemInfo.selinux ?? "-"}</span>
             </Show>
           </div>
         </div>

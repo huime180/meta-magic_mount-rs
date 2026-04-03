@@ -52,7 +52,7 @@ function createSysStore() {
         setVersion(nextVersion);
         setStorage(nextStorage);
         setSystemInfo(info);
-        setActivePartitions(info.activeMounts || []);
+        setActivePartitions(info.activeMounts ?? []);
         hasLoaded = true;
       } catch {
         uiStore.showToast(
