@@ -117,6 +117,7 @@ html,
 body,
 #app {
   height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -129,6 +130,13 @@ body,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
+}
+
+@supports (height: 100lvh) {
+  #app {
+    height: 100lvh;
+    min-height: 100lvh;
+  }
 }
 
 input,
