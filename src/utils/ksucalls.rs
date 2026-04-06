@@ -19,7 +19,7 @@ pub fn check_ksu() {
     KSU.store(status, std::sync::atomic::Ordering::Relaxed);
 }
 
-static LAST: AtomicBool = AtomicBool::new(false);
+static FLAG: AtomicBool = AtomicBool::new(false);
 pub static LIST: LazyLock<Mutex<TryUmount>> = LazyLock::new(|| Mutex::new(TryUmount::new()));
 
 pub fn send_unmountable<P>(target: P)
@@ -30,7 +30,7 @@ where
         return;
     }
 
-    if LAST.load(std::sync::atomic::Ordering::Relaxed) {
+    if FLAG.load(std::sync::atomic::Ordering::Relaxed) {
         return;
     }
 
