@@ -167,28 +167,27 @@ impl Node {
         if let Ok(metadata) = entry.metadata() {
             let path = entry.path();
             let file_type = if metadata.file_type().is_char_device() && metadata.rdev() == 0 {
-                Some(NodeFileType::Whiteout)
+                NodeFileType::Whiteout
             } else {
-                Some(NodeFileType::from(metadata.file_type()))
+                NodeFileType::from(metadata.file_type())
             };
-            if let Some(file_type) = file_type {
-                let replace = file_type == NodeFileType::Directory && Self::dir_is_replace(&path);
-                let skip = Self::dir_is_skip(&path);
-                if replace {
-                    log::debug!("{} need replace", path.display());
-                }
-                if skip {
-                    log::debug!("{} was skip", path.display());
-                }
-                return Some(Self {
-                    name: name.to_string(),
-                    file_type,
-                    children: HashMap::default(),
-                    module_path: Some(path),
-                    replace,
-                    skip,
-                });
+
+            let replace = file_type == NodeFileType::Directory && Self::dir_is_replace(&path);
+            let skip = Self::dir_is_skip(&path);
+            if replace {
+                log::debug!("{} need replace", path.display());
             }
+            if skip {
+                log::debug!("{} was skip", path.display());
+            }
+            return Some(Self {
+                name: name.to_string(),
+                file_type,
+                children: HashMap::default(),
+                module_path: Some(path),
+                replace,
+                skip,
+            });
         }
 
         None
