@@ -1,13 +1,16 @@
 // Copyright 2025 Magic Mount-rs Authors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use std::{fmt, fs};
+use std::{collections::HashSet, fmt, fs};
 
-use anyhow::{Context, Result, anyhow, bail};
+use anyhow::{anyhow, bail, Context, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::defs::{CONFIG_FILE, IGNORE_LIST_PATH, MODULE_PATH};
+use crate::{
+    defs::{CONFIG_FILE, IGNORE_LIST_PATH, MODULE_PATH},
+    magic_mount::node::IGNORE_LIST,
+};
 
 #[derive(Debug, Serialize)]
 pub struct ApiConfig {
@@ -114,21 +117,6 @@ impl Config {
         Ok(())
     }
 
-    fn read_ignore_list() -> Result<Vec<String>> {
-        let content = match fs::read_to_string(IGNORE_LIST_PATH) {
-            Ok(content) => content,
-            Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
-            Err(err) => return Err(err).context("failed to read ignore list"),
-        };
-
-        Ok(content
-            .lines()
-            .map(str::trim)
-            .filter(|line| !line.is_empty())
-            .map(ToOwned::to_owned)
-            .collect())
-    }
-
     fn write_ignore_list(ignore_list: &[String]) -> Result<()> {
         if let Some(parent) = std::path::Path::new(IGNORE_LIST_PATH).parent() {
             fs::create_dir_all(parent).context("failed to create ignore list directory")?;
@@ -200,7 +188,14 @@ pub fn parse_payload_arg(args: &[String]) -> Result<&str> {
 
 pub fn handle_show_config() -> Result<()> {
     let config = Config::load_or_default();
-    let ignore_list = Config::read_ignore_list()?;
+    let ignore_list: Vec<_> = IGNORE_LIST
+        .get()
+        .unwrap()
+        .clone()
+        .unwrap_or(HashSet::new())
+        .iter()
+        .cloned()
+        .collect();
     println!("{}", serde_json::to_string(&config.into_api(ignore_list))?);
     Ok(())
 }
