@@ -47,20 +47,13 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v5.0.0
         with:
+          cache: ${{ github.event_name == 'push' }}
           run_install: false
           package_json_file: webui/package.json
       - name: Setup node
         uses: actions/setup-node@v6.3.0
         with:
           node-version: "lts/*"
-      - name: Restore pnpm cache
-        id: pnpm-cache-restore
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('webui/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
       - uses: Swatinem/rust-cache@v2
         with:
           save-if: ${{ github.event_name == 'push' }}
@@ -73,12 +66,6 @@ jobs:
         run: |
           cd webui/
           pnpm install --frozen-lockfile
-      - name: Save pnpm cache
-        if: github.event_name == 'push'
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.pnpm-store
-          key: ${{ steps.pnpm-cache-restore.outputs.cache-primary-key }}
       - name: Build
         run: |
           cargo xtask build
