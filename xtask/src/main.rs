@@ -243,11 +243,6 @@ fn build(verbose: bool) -> Result<()> {
         bin_path.join("magic_mount_rs.armv7"),
         &file::CopyOptions::new().overwrite(true),
     )?;
-    file::copy(
-        x64_bin_path(),
-        bin_path.join("magic_mount_rs.x64"),
-        &file::CopyOptions::new().overwrite(true),
-    )?;
     let options: FileOptions<'_, ()> = FileOptions::default()
         .compression_method(CompressionMethod::Deflated)
         .compression_level(Some(9));
@@ -287,13 +282,6 @@ fn armv7_bin_path() -> PathBuf {
         .join("magic_mount_rs")
 }
 
-fn x64_bin_path() -> PathBuf {
-    Path::new("target")
-        .join("x86_64-linux-android")
-        .join("release")
-        .join("magic_mount_rs")
-}
-
 fn cargo_ndk() -> Command {
     let mut command = Command::new("cargo");
     command
@@ -306,8 +294,6 @@ fn cargo_ndk() -> Command {
             "arm64-v8a",
             "-t",
             "armeabi-v7a",
-            "-t",
-            "x86_64",
         ])
         .env("RUSTFLAGS", "-C default-linker-libraries");
     command

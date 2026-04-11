@@ -30,10 +30,6 @@ armeabi-v7a)
   ui_print "- Selected architecture: armeabi-v7a"
   ARCH_BINARY="magic_mount_rs.armv7"
   ;;
-x86_64)
-  ui_print "- Selected architecture: x86_64"
-  ARCH_BINARY="magic_mount_rs.x64"
-  ;;
 *)
   abort "! Unsupported platform: $ABI"
   ;;
