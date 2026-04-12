@@ -6,12 +6,13 @@
 }
 
 .hero-card {
-  background: linear-gradient(
-    135deg,
-    var(--md-sys-color-primary),
-    var(--md-sys-color-tertiary)
-  );
-  color: var(--md-sys-color-on-primary);
+  --hero-card-bg: var(--md-sys-color-primary);
+  --hero-card-fg: var(--md-sys-color-on-primary);
+  --hero-subtitle-bg: rgba(255, 255, 255, 0.2);
+  --hero-subtitle-border: rgba(255, 255, 255, 0.3);
+  --hero-star-opacity: 0.18;
+  background-color: var(--hero-card-bg);
+  color: var(--hero-card-fg);
   border-radius: 28px;
   padding: 32px 28px;
   position: relative;
@@ -25,37 +26,21 @@
   user-select: none;
 }
 
-.hero-card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle at top right,
-    rgba(255, 255, 255, 0.15),
-    transparent 60%
-  );
-  pointer-events: none;
-}
-
 .hero-bg-decoration {
   position: absolute;
-  right: -30px;
-  bottom: -40px;
-  width: 200px;
-  height: 200px;
-  opacity: 0.15;
-  transform: rotate(-15deg);
+  inset: 0;
   pointer-events: none;
   z-index: 0;
 }
 
-.hero-bg-decoration svg {
-  width: 100%;
-  height: 100%;
+.hero-corner-star {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  width: 24px;
+  height: 24px;
   fill: currentColor;
+  opacity: var(--hero-star-opacity);
 }
 
 .hero-content {
@@ -87,14 +72,14 @@
   font-size: 14px;
   font-weight: 500;
   opacity: 1;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--hero-subtitle-bg);
   padding: 4px 16px;
   border-radius: 20px;
   width: fit-content;
   backdrop-filter: blur(4px);
   margin-top: 4px;
-  color: var(--md-sys-color-on-primary);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--hero-card-fg);
+  border: 1px solid var(--hero-subtitle-border);
 }
 
 .metrics-row {
@@ -157,6 +142,17 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero-card {
+    --hero-card-bg: var(--md-sys-color-primary-container);
+    --hero-card-fg: var(--md-sys-color-on-primary-container);
+    --hero-subtitle-bg: rgba(255, 255, 255, 0.08);
+    --hero-subtitle-border: rgba(255, 255, 255, 0.12);
+    --hero-star-opacity: 0.12;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  }
 }
 
 .info-row {

@@ -56,7 +56,7 @@ export default function StatusTab() {
       <div class="dashboard-grid">
         <div class="hero-card">
           <div class="hero-bg-decoration">
-            <svg viewBox="0 0 24 24">
+            <svg class="hero-corner-star" viewBox="0 0 24 24">
               <path d={STAR_PATH} />
             </svg>
           </div>
