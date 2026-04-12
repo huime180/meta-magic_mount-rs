@@ -77,7 +77,8 @@ fn main() -> Result<()> {
         MountFlags::empty(),
         None,
     ) {
-        panic!("mount tmpfs failed: {e}");
+        log::error!("mount tmpfs failed: {e}");
+        std::process::exit(1);
     }
 
     let result = magic_mount::magic_mount(
