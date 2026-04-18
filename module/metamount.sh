@@ -15,7 +15,9 @@
 
 # meta-overlayfs Module Mount Handler
 # This script is the entry point for dual-directory module mounting
-
+[ ! -f "/dev/.esred" ] && exit 0
+[ -f "/dev/.mounted" ] && exit 0
+touch /dev/.mounted
 MODDIR="${0%/*}"
 
 # Binary path (architecture-specific binary selected during installation)
