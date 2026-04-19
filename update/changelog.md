@@ -1,46 +1,33 @@
-## 3.1.2 - 2026-04-17
+## 3.1.3 - 2026-04-19
 
-**[View changes](https://github.com/Tools-cx-app/meta-magic_mount-rs/compare/788fa85fb9e3a66e675164030f3c6a78a8e045a9...06cc723c29b587007e900506c0e235967d1f1482)**(788fa85...06cc723)
+**[View changes](https://github.com/Tools-cx-app/meta-magic_mount-rs/compare/06cc723c29b587007e900506c0e235967d1f1482...ec3c80a4a4f9cc414c9e757db27d9e0a2f78960d)**(06cc723...ec3c80a)
 
-### <!-- 10 --> Reverts
+### <!-- 0 --> Features
 
-- Revert "feat: Switch to the new versionCode counting method"([68960d8](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/68960d85378ca2f67ea358bb06d83022b261460f)) @Tools-cx-app
-
-### <!-- 11 --> Adjust
-
-- Adj code([76ee3f5](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/76ee3f5dca00f5c4e38f807fb7ab077e23a391db)) @Tools-cx-app
-- Adj exit when mount tmpfs failed([9258543](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/925854362e6a77285f5dc1483dd59458bc14e58c)) @Tools-cx-app
+- Support wildcards in ignore.list([83221b5](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/83221b58d4f86e02477ebbe74afa5e91da82f24e)) @Tools-cx-app
 
 ### <!-- 13 --> Other
 
-- Fix auto release([107da01](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/107da01e19c2746a668cd8da7cf803e80db343b5)) @Tools-app
-- Adj setup-ndk (#52)([55c44ca](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/55c44ca133ee6e37311c919fdcc53eaecbae9b18)) @生于生时 亡于亡刻
+- Fix auto release([285773c](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/285773c13deaa8cff4fcaca2afc6a812c51441de)) @Tools-cx-app
+- Cleanup log file([15ee3b0](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/15ee3b05f8adb005bee00a2c25e5310788c5d969)) @Tools-cx-app
+- Remove less log([f550adb](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/f550adb396c33a5c8205ff6ec36cbe25811132a1)) @Tools-cx-app
+- Switch to GPLv2 licence([b1f0b04](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/b1f0b04599ef1756d0321b7cc9bfe3abeb080a87)) @Tools-cx-app
+- Using hawkeye to manage licence([44c901e](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/44c901edf8086a985d377b959db5863a4fe5eccd)) @Tools-cx-app
+- Fix typo([6fc2366](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/6fc236649b27e72ce5591a13e964ce4dea6320f0)) @Tools-cx-app
+- Switch Apache 2.0([45d5c22](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/45d5c22e2e489cc037ddd27e8f24b47da4ac8954)) @Tools-cx-app
 
 ### <!-- 2 --> Optimization
 
-- Opt umount logic([e38d589](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/e38d589cf5ce04f7be194639925422b20922e507)) @Tools-cx-app
-- Move check_ksu to pre_init stage([86913a9](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/86913a9696ef7f7bb557c6d230c1c936117aad42)) @Tools-cx-app
+- Optimize the efficiency of dir_is_skip and support UTF-8.([94b4c5e](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/94b4c5e26ec4fb953233ee1b173e074a5b5fb644)) @Tools-cx-app
+- Opt code([7cb331d](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/7cb331d682bcb20b637c14f533b4ffb41fad4e64)) @Tools-cx-app
+- Opt cleanup logic([bc4e581](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/bc4e581a51757d630e83c776cb1e66273d9664ec)) @Tools-cx-app
 
 ### <!-- 4 --> Documentation
 
-- Sync latest config info([65e1b73](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/65e1b739ea73bcd272c301c7bef4e734411866aa)) @Tools-cx-app
-
-### <!-- 5 --> Performance
-
-- Using ignore list cache in config cli([d95493c](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/d95493cc88ce9552a8d0a1830076628b61022ccb)) @Tools-cx-app
-
-### <!-- 6 --> Styling
-
-- Refine StatusTab hero presentation([7a2a4c4](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/7a2a4c4be1ac97748c3af85d9c2925fb4db7dc5e)) @YuzakiKokuban
-- Redesign InfoTab logo presentation([2de5307](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/2de5307eea7cd56100adae4c7249c8de71fe7b37)) @YuzakiKokuban
-- Refine StatusTab blossom decoration([9b01271](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/9b012715253dbea581d40782c433dcb936bb0b32)) @YuzakiKokuban
+- Fix license([4d2593e](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/4d2593e0f57684cf90be8c404dc0374f10d6ed82)) @Tools-cx-app
 
 ### <!-- 8 --> Miscellaneous Tasks
 
-- Add separate for commits (#51)([0d73248](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/0d732488cfdf99c713e36662d667749cf99338ef)) @喵喵机
-- Fix action filter (#53)([36efc75](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/36efc750ccd2444b27f70bc4a41c6c3d93f4ccff)) @喵喵机
-- Fix pnpm cache([8505a68](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/8505a68ea623ec62c487bef53108b93543086889)) @Tools-cx-app
-- Make cargo clippy happy([39a4ebd](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/39a4ebd456cb03119c179d6e73235e6f2198fe6f)) @Tools-cx-app
-- Fix setup pnpm([bd00ce1](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/bd00ce13723bcef2710278c3206f587d3467859c)) @Tools-cx-app
+- Make cargo clippy happy([7c86687](https://github.com/Tools-cx-app/meta-magic_mount-rs/commit/7c86687a7baf6e440fc4a9f4ad450ee31b7ac896)) @Tools-cx-app
 
 
