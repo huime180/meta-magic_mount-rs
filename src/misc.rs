@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::fs;
+use std::{fs, path::Path};
+
+use rustix::mount::{UnmountFlags, unmount};
 
 use crate::{defs, utils::ksucalls};
 
@@ -54,6 +56,20 @@ fn init_list() {
     });
 }
 
+pub fn cleanup<P>(tempdir: P)
+where
+    P: AsRef<Path>,
+{
+    if let Err(e) = unmount(
+        tempdir.as_ref().to_string_lossy().to_string(),
+        UnmountFlags::DETACH,
+    ) {
+        log::warn!("failed to unmount tempdir: {e}");
+    }
+    if let Err(e) = std::fs::remove_dir(&tempdir) {
+        log::warn!("failed to remove tempdir: {e}");
+    }
+}
 pub fn pre_init() {
     assert!(
         !(std::env::var("KSU_LATE_LOAD").is_ok() && std::env::var("KSU").is_ok()),

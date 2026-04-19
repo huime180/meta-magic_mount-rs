@@ -31,6 +31,7 @@ use rustix::mount::{MountFlags, mount};
 use crate::{
     config::{Config, handle_gen_config, handle_save_config, handle_show_config},
     defs::MODULE_PATH,
+    misc::cleanup,
 };
 
 #[global_allocator]
@@ -100,20 +101,11 @@ fn main() -> Result<()> {
         config.umount,
     );
 
-    let cleanup = || {
-        use rustix::mount::{UnmountFlags, unmount};
-        if let Err(e) = unmount(&tempdir, UnmountFlags::DETACH) {
-            log::warn!("failed to unmount tempdir: {e}");
-        }
-        if let Err(e) = std::fs::remove_dir(&tempdir) {
-            log::warn!("failed to remove tempdir: {e}");
-        }
-    };
+    cleanup(tempdir);
 
     match result {
         Ok(()) => {
             log::info!("Magic Mount Completed Successfully");
-            cleanup();
             Ok(())
         }
         Err(e) => {
@@ -122,7 +114,6 @@ fn main() -> Result<()> {
                 log::error!("{cause:#?}");
             }
             log::error!("{:#?}", e.backtrace());
-            cleanup();
             Err(e)
         }
     }
