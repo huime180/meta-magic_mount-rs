@@ -51,7 +51,14 @@ fn init_list() {
     super::magic_mount::node::IGNORE_LIST.get_or_init(|| {
         fs::read_to_string(defs::IGNORE_LIST_PATH).map_or_else(
             |_| None,
-            |f| Some(f.lines().map(std::string::ToString::to_string).collect()),
+            |f| {
+                Some(
+                    f.lines()
+                        .filter(|s| !s.starts_with("#"))
+                        .map(std::string::ToString::to_string)
+                        .collect(),
+                )
+            },
         )
     });
 }
@@ -70,6 +77,7 @@ where
         log::warn!("failed to remove tempdir: {e}");
     }
 }
+
 pub fn pre_init() {
     assert!(
         !(std::env::var("KSU_LATE_LOAD").is_ok() && std::env::var("KSU").is_ok()),
