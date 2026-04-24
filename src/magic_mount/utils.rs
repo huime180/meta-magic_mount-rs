@@ -25,7 +25,7 @@ use rustix::{
 };
 
 use crate::{
-    defs::{DISABLE_FILE_NAME, REMOVE_FILE_NAME, SKIP_MOUNT_FILE_NAME},
+    defs,
     magic_mount::node::Node,
     utils::{lgetfilecon, lsetfilecon, validate_module_id},
 };
@@ -149,9 +149,9 @@ pub fn collect_module_files(
             }
         }
 
-        if entry.path().join(DISABLE_FILE_NAME).exists()
-            || entry.path().join(REMOVE_FILE_NAME).exists()
-            || entry.path().join(SKIP_MOUNT_FILE_NAME).exists()
+        if entry.path().join(defs::DISABLE_FILE_NAME).exists()
+            || entry.path().join(defs::REMOVE_FILE_NAME).exists()
+            || entry.path().join(defs::SKIP_MOUNT_FILE_NAME).exists()
         {
             log::debug!("skipped module {id}, due to disable/remove/skip_mount");
             continue;

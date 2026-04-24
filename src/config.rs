@@ -18,10 +18,7 @@ use anyhow::{Context, Result, anyhow, bail};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::{
-    defs::{CONFIG_FILE, IGNORE_LIST_PATH, MODULE_PATH},
-    magic_mount::node::IGNORE_LIST,
-};
+use crate::{defs, magic_mount::node::IGNORE_LIST};
 
 #[derive(Debug, Serialize)]
 pub struct ApiConfig {
@@ -97,7 +94,8 @@ impl Config {
     const fn set_umount_enabled(&mut self, _enabled: bool) {}
 
     pub fn load() -> Result<Self> {
-        let content = fs::read_to_string(CONFIG_FILE).context("failed to read config file")?;
+        let content =
+            fs::read_to_string(defs::CONFIG_FILE).context("failed to read config file")?;
 
         let config: Self = toml::from_str(&content).unwrap_or_else(|e| {
             log::error!("Failed to deserialize config to toml: {e}");
@@ -120,16 +118,16 @@ impl Config {
     fn save(&self) -> Result<()> {
         let content = toml::to_string_pretty(self).context("failed to serialize config to toml")?;
 
-        if let Some(parent) = std::path::Path::new(CONFIG_FILE).parent() {
+        if let Some(parent) = std::path::Path::new(defs::CONFIG_FILE).parent() {
             fs::create_dir_all(parent).context("failed to create config directory")?;
         }
 
-        fs::write(CONFIG_FILE, content).context("failed to write config file")?;
+        fs::write(defs::CONFIG_FILE, content).context("failed to write config file")?;
         Ok(())
     }
 
     fn write_ignore_list(ignore_list: &[String]) -> Result<()> {
-        if let Some(parent) = std::path::Path::new(IGNORE_LIST_PATH).parent() {
+        if let Some(parent) = std::path::Path::new(defs::IGNORE_LIST_PATH).parent() {
             fs::create_dir_all(parent).context("failed to create ignore list directory")?;
         }
 
@@ -138,7 +136,7 @@ impl Config {
             content.push('\n');
         }
 
-        fs::write(IGNORE_LIST_PATH, content).context("failed to write ignore list")?;
+        fs::write(defs::IGNORE_LIST_PATH, content).context("failed to write ignore list")?;
         Ok(())
     }
 
@@ -146,7 +144,7 @@ impl Config {
         let umount_enabled = self.umount_enabled();
 
         ApiConfig {
-            moduledir: MODULE_PATH.trim_end_matches('/').to_string(),
+            moduledir: defs::MODULE_PATH.trim_end_matches('/').to_string(),
             mountsource: self.mountsource,
             partitions: self.partitions,
             umount: umount_enabled,

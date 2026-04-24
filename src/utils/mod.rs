@@ -26,8 +26,6 @@ use extattr::{Flags as XattrFlags, lgetxattr, lsetxattr};
 use regex_lite::Regex;
 
 use crate::defs;
-#[cfg(any(target_os = "linux", target_os = "android"))]
-use crate::defs::SELINUX_XATTR;
 
 /// Validate `module_id` format and security
 /// Module ID must match: ^[a-zA-Z][a-zA-Z0-9._-]+$
@@ -57,7 +55,7 @@ pub fn generate_tmp() -> PathBuf {
 
 pub fn lsetfilecon<P: AsRef<Path>>(path: P, con: &str) -> Result<()> {
     log::debug!("file: {},con: {}", path.as_ref().display(), con);
-    lsetxattr(&path, SELINUX_XATTR, con, XattrFlags::empty()).with_context(|| {
+    lsetxattr(&path, defs::SELINUX_XATTR, con, XattrFlags::empty()).with_context(|| {
         format!(
             "Failed to change SELinux context for {}",
             path.as_ref().display()
@@ -71,7 +69,7 @@ pub fn lgetfilecon<P>(path: P) -> Result<String>
 where
     P: AsRef<Path>,
 {
-    let con = lgetxattr(&path, SELINUX_XATTR).with_context(|| {
+    let con = lgetxattr(&path, defs::SELINUX_XATTR).with_context(|| {
         format!(
             "Failed to get SELinux context for {}",
             path.as_ref().display()
