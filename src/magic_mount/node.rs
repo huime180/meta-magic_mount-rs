@@ -25,7 +25,7 @@ use anyhow::Result;
 use extattr::lgetxattr;
 use rustix::path::Arg;
 
-use crate::defs::{REPLACE_DIR_FILE_NAME, REPLACE_DIR_XATTR};
+use crate::defs;
 
 pub static IGNORE_LIST: OnceLock<Option<HashSet<String>>> = OnceLock::new();
 
@@ -133,11 +133,13 @@ impl Node {
     where
         P: AsRef<Path>,
     {
-        if lgetxattr(&path, REPLACE_DIR_XATTR).is_ok_and(|s| String::from_utf8_lossy(&s) == "y") {
+        if lgetxattr(&path, defs::REPLACE_DIR_XATTR)
+            .is_ok_and(|s| String::from_utf8_lossy(&s) == "y")
+        {
             return true;
         }
 
-        path.as_ref().join(REPLACE_DIR_FILE_NAME).exists()
+        path.as_ref().join(defs::REPLACE_DIR_FILE_NAME).exists()
     }
 
     fn dir_is_skip<P>(path: P) -> bool

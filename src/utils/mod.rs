@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[cfg(any(target_os = "linux", target_os = "android"))]
 pub mod ksucalls;
 use std::{
     fs::{self, create_dir_all},
@@ -21,13 +20,10 @@ use std::{
 };
 
 use anyhow::{Context, Result, anyhow, bail};
-#[cfg(any(target_os = "linux", target_os = "android"))]
 use extattr::{Flags as XattrFlags, lgetxattr, lsetxattr};
 use regex_lite::Regex;
 
 use crate::defs;
-#[cfg(any(target_os = "linux", target_os = "android"))]
-use crate::defs::SELINUX_XATTR;
 
 /// Validate `module_id` format and security
 /// Module ID must match: ^[a-zA-Z][a-zA-Z0-9._-]+$
@@ -57,7 +53,7 @@ pub fn generate_tmp() -> PathBuf {
 
 pub fn lsetfilecon<P: AsRef<Path>>(path: P, con: &str) -> Result<()> {
     log::debug!("file: {},con: {}", path.as_ref().display(), con);
-    lsetxattr(&path, SELINUX_XATTR, con, XattrFlags::empty()).with_context(|| {
+    lsetxattr(&path, defs::SELINUX_XATTR, con, XattrFlags::empty()).with_context(|| {
         format!(
             "Failed to change SELinux context for {}",
             path.as_ref().display()
@@ -66,12 +62,11 @@ pub fn lsetfilecon<P: AsRef<Path>>(path: P, con: &str) -> Result<()> {
     Ok(())
 }
 
-#[cfg(any(target_os = "linux", target_os = "android"))]
 pub fn lgetfilecon<P>(path: P) -> Result<String>
 where
     P: AsRef<Path>,
 {
-    let con = lgetxattr(&path, SELINUX_XATTR).with_context(|| {
+    let con = lgetxattr(&path, defs::SELINUX_XATTR).with_context(|| {
         format!(
             "Failed to get SELinux context for {}",
             path.as_ref().display()
@@ -79,14 +74,6 @@ where
     })?;
     let con = String::from_utf8_lossy(&con);
     Ok(con.to_string())
-}
-
-#[cfg(not(any(target_os = "linux", target_os = "android")))]
-pub fn lgetfilecon<P>(path: P) -> Result<String>
-where
-    P: AsRef<Path>,
-{
-    unimplemented!()
 }
 
 pub fn ensure_dir_exists<P>(dir: P) -> Result<()>
@@ -102,7 +89,9 @@ where
 }
 
 pub fn update_desc(file: u32, symbol: u32, ignore: u32) -> Result<()> {
-    let text = format!("[😋 {file},{symbol},{ignore}]\\nAn implementation of a metamodule using Magic Mount.");
+    let text = format!(
+        "[😋 {file},{symbol},{ignore}]\\nAn implementation of a metamodule using Magic Mount."
+    );
 
     let prop = fs::read_to_string(defs::MODULE_PROP)?;
     let mut temp = tempfile::Builder::new().tempfile()?;

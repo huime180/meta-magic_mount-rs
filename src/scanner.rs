@@ -23,10 +23,7 @@ use anyhow::Result;
 use java_properties::PropertiesIter;
 use serde::Serialize;
 
-use crate::{
-    defs::{DISABLE_FILE_NAME, REMOVE_FILE_NAME, SKIP_MOUNT_FILE_NAME},
-    utils::validate_module_id,
-};
+use crate::{defs, utils::validate_module_id};
 
 #[derive(Debug)]
 struct ModuleRecord {
@@ -106,9 +103,9 @@ where
                 }
             }
 
-            let disabled =
-                path.join(DISABLE_FILE_NAME).exists() || path.join(REMOVE_FILE_NAME).exists();
-            let skip_mount = path.join(SKIP_MOUNT_FILE_NAME).exists();
+            let disabled = path.join(defs::DISABLE_FILE_NAME).exists()
+                || path.join(defs::REMOVE_FILE_NAME).exists();
+            let skip_mount = path.join(defs::SKIP_MOUNT_FILE_NAME).exists();
 
             let prop_path = path.join("module.prop");
 
