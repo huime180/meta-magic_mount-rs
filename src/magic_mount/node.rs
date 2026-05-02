@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use std::{
-    collections::{HashMap, HashSet, hash_map::Entry},
+    collections::hash_map::Entry,
     fmt,
     fs::{DirEntry, FileType},
     os::unix::fs::{FileTypeExt, MetadataExt},
@@ -22,11 +22,12 @@ use std::{
 };
 
 use extattr::lgetxattr;
+use rustc_hash::{FxHashMap, FxHashSet};
 use rustix::path::Arg;
 
 use crate::{defs, errors::Result};
 
-pub static IGNORE_LIST: OnceLock<Option<HashSet<String>>> = OnceLock::new();
+pub static IGNORE_LIST: OnceLock<Option<FxHashSet<String>>> = OnceLock::new();
 
 #[derive(PartialEq, Eq, Hash, Clone, Debug)]
 pub enum NodeFileType {
@@ -54,7 +55,7 @@ impl From<FileType> for NodeFileType {
 pub struct Node {
     pub name: String,
     pub file_type: NodeFileType,
-    pub children: HashMap<String, Self>,
+    pub children: FxHashMap<String, Self>,
     // the module that owned this node
     pub module_path: Option<PathBuf>,
     pub replace: bool,
@@ -164,7 +165,7 @@ impl Node {
         Self {
             name: name.into(),
             file_type: NodeFileType::Directory,
-            children: HashMap::default(),
+            children: FxHashMap::default(),
             module_path: None,
             replace: false,
             skip: false,
@@ -194,7 +195,7 @@ impl Node {
             return Some(Self {
                 name: name.to_string(),
                 file_type,
-                children: HashMap::default(),
+                children: FxHashMap::default(),
                 module_path: Some(path),
                 replace,
                 skip,
