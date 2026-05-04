@@ -13,21 +13,18 @@
 // limitations under the License.
 
 use std::{
-    collections::{HashMap, HashSet, hash_map::Entry},
+    collections::hash_map::Entry,
     fmt,
     fs::{DirEntry, FileType},
     os::unix::fs::{FileTypeExt, MetadataExt},
     path::{Path, PathBuf},
-    sync::OnceLock,
 };
 
-use anyhow::Result;
 use extattr::lgetxattr;
+use rustc_hash::FxHashMap;
 use rustix::path::Arg;
 
-use crate::defs;
-
-pub static IGNORE_LIST: OnceLock<Option<HashSet<String>>> = OnceLock::new();
+use crate::{defs, errors::Result, parser::COMMAND_LIST};
 
 #[derive(PartialEq, Eq, Hash, Clone, Debug)]
 pub enum NodeFileType {
@@ -55,7 +52,7 @@ impl From<FileType> for NodeFileType {
 pub struct Node {
     pub name: String,
     pub file_type: NodeFileType,
-    pub children: HashMap<String, Self>,
+    pub children: FxHashMap<String, Self>,
     // the module that owned this node
     pub module_path: Option<PathBuf>,
     pub replace: bool,
@@ -146,11 +143,11 @@ impl Node {
     where
         P: AsRef<Path>,
     {
-        let list = IGNORE_LIST.get().unwrap();
+        let list = COMMAND_LIST.get().unwrap();
         let path = path.as_ref().to_string_lossy();
-        if let Some(f) = list
-            && f.iter()
-                .any(|s| glob::Pattern::new(s).is_ok_and(|s| s.matches(&path)))
+        if list
+            .iter()
+            .any(|s| matches!(s, crate::parser::Command::Ignore { source } if source == &path))
         {
             return true;
         }
@@ -165,7 +162,7 @@ impl Node {
         Self {
             name: name.into(),
             file_type: NodeFileType::Directory,
-            children: HashMap::default(),
+            children: FxHashMap::default(),
             module_path: None,
             replace: false,
             skip: false,
@@ -195,7 +192,7 @@ impl Node {
             return Some(Self {
                 name: name.to_string(),
                 file_type,
-                children: HashMap::default(),
+                children: FxHashMap::default(),
                 module_path: Some(path),
                 replace,
                 skip,

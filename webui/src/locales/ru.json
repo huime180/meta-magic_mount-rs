@@ -46,6 +46,16 @@
     "partitionsDesc": "Добавить разделы для монтирования",
     "ignoreList": "Список исключений",
     "ignoreListDesc": "Каталоги, исключаемые из монтирования",
+    "customMounts": "Пользовательские bind-монтирования",
+    "customMountsDesc": "Добавьте пользовательскую точку монтирования по исходному и целевому пути",
+    "customMountSource": "Исходный путь",
+    "customMountTarget": "Целевой путь",
+    "addCustomMount": "Добавить bind-монтирование",
+    "editCustomMount": "Изменить bind-монтирование",
+    "removeCustomMount": "Удалить bind-монтирование",
+    "customMountDialogAdd": "Добавить bind-монтирование",
+    "customMountDialogEdit": "Изменить bind-монтирование",
+    "customMountDialogSave": "Сохранить",
     "autoPlaceholder": "Автоматический выбор если пусто",
     "reload": "Перезагрузить",
     "save": "Сохранить",
@@ -95,5 +105,9 @@
     "loading": "Загрузка контрибьюторов...",
     "loadFail": "Не удалось загрузить (лимит API)",
     "noBio": "Биография отсутствует"
+  },
+  "content": {
+    "welcome": "Welcome to",
+    "mmrs": "Magic Mount-rs"
   }
 }

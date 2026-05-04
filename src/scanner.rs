@@ -12,15 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::{
-    collections::{BTreeMap, HashMap, HashSet},
-    fs,
-    io::Cursor,
-    path::Path,
-};
+use std::{collections::BTreeMap, fs, io::Cursor, path::Path};
 
 use anyhow::Result;
 use java_properties::PropertiesIter;
+use rustc_hash::{FxHashMap, FxHashSet};
 use serde::Serialize;
 
 use crate::{defs, utils::validate_module_id};
@@ -58,12 +54,12 @@ pub struct AppModule {
     rules: ModuleRules,
 }
 
-fn read_prop<P>(path: P) -> Result<HashMap<String, String>>
+fn read_prop<P>(path: P) -> Result<FxHashMap<String, String>>
 where
     P: AsRef<Path>,
 {
     let buffer = fs::read_to_string(path)?;
-    let mut map = HashMap::new();
+    let mut map = FxHashMap::default();
     PropertiesIter::new_with_encoding(Cursor::new(buffer), encoding_rs::UTF_8).read_into(
         |k, v| {
             map.insert(k, v);
@@ -92,7 +88,7 @@ where
             }
 
             let mut modified = false;
-            let mut partitions = HashSet::new();
+            let mut partitions = FxHashSet::default();
             partitions.insert("system".to_string());
             partitions.extend(extra.iter().cloned());
 
