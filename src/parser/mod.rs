@@ -32,6 +32,10 @@ where
                 .map(str::trim)
                 .filter(|s| !s.starts_with('#'))
                 .filter_map(parse_command)
+                .map(|s| {
+                    log::debug!("custom command: {s:?}");
+                    s
+                })
                 .collect()
         },
     )

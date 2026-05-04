@@ -31,6 +31,7 @@ pub fn bind_mount(umount: bool) -> Result<()> {
         .collect();
 
     for (s, t) in bind_mount_list {
+        log::debug!("bind mount: {s} -> {t}");
         mount_bind(s, &t)?;
         if umount {
             send_unmountable(&t);
